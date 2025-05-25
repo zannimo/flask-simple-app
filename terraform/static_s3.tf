@@ -2,8 +2,8 @@ resource "aws_s3_bucket" "static_site" {
   bucket = var.bucket_name
 
   tags = {
-    Name        = "StaticSite"
-    Environment = "Dev"
+    Environment = var.environment
+    Project     = "movie-app"
   }
 }
 
