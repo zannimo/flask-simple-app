@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "static_site" {
-  bucket = "my-public-website-2024-test"
+  bucket = var.bucket_name
 
   tags = {
     Name        = "StaticSite"
@@ -43,7 +43,11 @@ resource "aws_s3_bucket_policy" "allow_public_read" {
       }
     ]
   })
+  depends_on = [
+    aws_s3_bucket_public_access_block.public_access
+  ]
 }
+
 
 resource "aws_s3_object" "index" {
   bucket       = aws_s3_bucket.static_site.bucket
