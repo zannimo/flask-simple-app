@@ -17,3 +17,7 @@ variable "dynamodb_gsi_name" {
   type        = string
   default     = "year-index"
 }
+variable "movie_posters_bucket_name" {
+  description = "S3 bucket name for movie posters"
+  type        = string
+}
