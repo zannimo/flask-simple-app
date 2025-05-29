@@ -26,7 +26,7 @@ resource "aws_lambda_function" "movie_api" {
   runtime       = "python3.11"
   timeout       = 10
 
-  filename         = "${path.module}/lambda_function_package.zip"
+  filename         = "lambda_function_package.zip"
   source_code_hash = filebase64sha256("${path.module}/lambda_function_package.zip")
 
   environment {
