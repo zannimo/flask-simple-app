@@ -21,3 +21,8 @@ variable "movie_posters_bucket_name" {
   description = "S3 bucket name for movie posters"
   type        = string
 }
+variable "lambda_function_name" {
+  description = "Name of the Lambda function"
+  type        = string
+  default     = "movie-api-lambda"
+}
