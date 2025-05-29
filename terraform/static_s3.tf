@@ -28,7 +28,7 @@ resource "aws_s3_bucket_public_access_block" "public_access" {
   restrict_public_buckets = false
 }
 
-resource "aws_s3_bucket_policy" "allow_public_read" {
+resource "aws_s3_bucket_policy" "static_site_public_read" {
   bucket = aws_s3_bucket.static_site.id
 
   policy = jsonencode({
