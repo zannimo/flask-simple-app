@@ -3,14 +3,19 @@ import boto3
 import os
 from decimal import Decimal
 from botocore.exceptions import ClientError
-from boto3.dynamodb.conditions import Attr
+from boto3.dynamodb.conditions import Attr, Key 
 
 # Set AWS region (hardcoded or from Lambda environment)
 AWS_REGION = os.environ.get("AWS_REGION", "us-east-1")
-MOVIE_TABLE = os.environ.get("DYNAMODB_TABLE")
 
+# Set main table and GSI from environment variables
+MOVIE_TABLE = os.environ.get("DYNAMODB_TABLE")
 if not MOVIE_TABLE:
     raise ValueError("DYNAMODB_TABLE environment variable is not set.")
+
+INDEX_NAME = os.environ.get("INDEX_NAME")
+if not INDEX_NAME:
+    raise ValueError("INDEX_NAME environment variable is not set.")
 
 # Initialize DynamoDB resource
 dynamodb = boto3.resource("dynamodb", region_name=AWS_REGION)
@@ -54,8 +59,9 @@ def get_all_movies():
 
 def get_movies_by_year(year):
     try:
-        response = table.scan(
-            FilterExpression=Attr("year").eq(int(year))
+        response = table.query(
+            IndexName=INDEX_NAME,
+            KeyConditionExpression=Key("year").eq(int(year))
         )
         movies = response.get("Items", [])
         return {
@@ -97,14 +103,15 @@ def get_movie_summary(movie_id):
 
 
 # Lambda entry point
+STAGE = os.environ.get("STAGE", "dev")  # Fallback to "dev" if not set
 def lambda_handler(event, context):
     print(f"Incoming event: {json.dumps(event)}")
 
     path = event.get("rawPath", "")
     path_params = event.get("pathParameters", {})
 
-    if path.startswith("/prod/"):
-        path = "/" + path[len("/prod/"):]
+    if path.startswith(f"/{STAGE}/"):
+        path = "/" + path[len(f"/{STAGE}/"):]
 
     print(f"Resolved path: {path}")
     print(f"Path parameters: {path_params}")

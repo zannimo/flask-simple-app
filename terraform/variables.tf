@@ -26,3 +26,8 @@ variable "lambda_function_name" {
   type        = string
   default     = "movie-api-lambda"
 }
+variable "api_stage_name" {
+  description = "Name of the API Gateway stage"
+  type        = string
+  default     = "dev"
+}

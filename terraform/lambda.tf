@@ -32,6 +32,8 @@ resource "aws_lambda_function" "movie_api" {
   environment {
     variables = {
       DYNAMODB_TABLE = var.dynamodb_table_name
+      INDEX_NAME = var.dynamodb_gsi_name 
+      STAGE = var.api_stage_name
     }
   }
 }
