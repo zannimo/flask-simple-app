@@ -42,4 +42,11 @@ resource "aws_s3_bucket_policy" "allow_public_read" {
       }
     ]
   })
+  depends_on = [
+    aws_s3_bucket_public_access_block.movie_posters
+  ]
+}
+
+output "s3_bucket_name" {
+  value = aws_s3_bucket.movie_posters.bucket
 }

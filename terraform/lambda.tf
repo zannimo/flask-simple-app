@@ -19,6 +19,12 @@ resource "aws_iam_policy_attachment" "lambda_logs" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
+resource "aws_iam_policy_attachment" "dynamodb_readonly_access" {
+  name       = "dynamodb_readonly_access"
+  roles      = [aws_iam_role.lambda_exec_role.name]
+  policy_arn = "arn:aws:iam::aws:policy/AmazonDynamoDBReadOnlyAccess"
+}
+
 resource "aws_lambda_function" "movie_api" {
   function_name = var.lambda_function_name
   role          = aws_iam_role.lambda_exec_role.arn
