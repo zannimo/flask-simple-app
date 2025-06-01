@@ -1,5 +1,6 @@
 resource "aws_s3_bucket" "movie_posters" {
   bucket = var.movie_posters_bucket_name
+  force_destroy = true
 
   tags = {
     Environment = var.environment
