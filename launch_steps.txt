@@ -1,0 +1,4 @@
+1. run terraform apply to create infra
+2. run add-data-infra.py to upload table and images in AWS
+3. run update_api_url.py to inject the API Gateway URL in the app.js file 
+4. upload the fronted into the public s3 bucket
