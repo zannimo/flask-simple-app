@@ -62,3 +62,7 @@ resource "aws_s3_object" "error" {
   source       = "../frontend/templates/error.html"
   content_type = "text/html"
 }
+
+output "static_s3_bucket_name" {
+  value = aws_s3_bucket.static_site.bucket 
+}
