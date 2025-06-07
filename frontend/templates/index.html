@@ -1,17 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Form Submission</title>
-    <link rel="stylesheet" href="/static/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Movie Database</title>
+  <link rel="stylesheet" href="static/styles.css" />
 </head>
 <body>
-    <h1>Submit Something</h1>
-    <form id="myForm">
-        <input type="text" id="userInput" placeholder="Enter something..." required>
-        <button type="submit">Send</button>
-    </form>
-    <p id="response"></p>
-    <script src="/static/script.js"></script>
+  <h1>Movie Database</h1>
+
+  <div class="controls">
+    <button id="fetchAllBtn">Retrieve All Movies</button>
+
+    <div class="filter-section">
+      <input type="text" id="yearInput" placeholder="Enter Year" />
+      <button id="filterByYearBtn">Filter by Year</button>
+    </div>
+  </div>
+
+  <!-- Move this section here -->
+  <div class="summary-section hidden">
+    <input type="text" id="movieIdInput" placeholder="Enter Movie ID" />
+    <button id="getSummaryBtn">Get Movie Summary</button>
+  </div>
+
+  <div id="moviesContainer"></div>
+
+  <script src="static/app.js"></script>
 </body>
 </html>
