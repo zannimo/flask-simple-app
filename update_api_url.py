@@ -8,7 +8,7 @@ PLACEHOLDER = '__API_GATEWAY_URL__'
 
 def get_terraform_output(output_name):
     result = subprocess.run(
-        ['terraform', 'output', '-raw', output_name],
+        ["terraform", "-chdir=terraform", "output", "-raw", output_name],
         capture_output=True,
         text=True,
         check=True

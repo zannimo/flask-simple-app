@@ -1,6 +1,12 @@
 resource "aws_apigatewayv2_api" "movie_api" {
   name          = "movie-api"
   protocol_type = "HTTP"
+
+  cors_configuration {
+    allow_origins = ["*"]
+    allow_methods = ["GET", "POST", "OPTIONS"]
+    allow_headers = ["*"]
+  }
 }
 
 resource "aws_apigatewayv2_integration" "lambda_integration" {
@@ -44,5 +50,5 @@ resource "aws_lambda_permission" "apigw_lambda" {
 }
 
 output "api_gateway_url" {
-  value = aws_apigatewayv2_stage.dev.invoke_url
+  value = aws_apigatewayv2_stage.api_stage.invoke_url
 }
