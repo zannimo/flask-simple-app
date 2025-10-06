@@ -1,9 +1,11 @@
 import subprocess
+import shutil
+import os
 
-# Path to your app.js
-APP_JS_PATH = 'frontend/static/app.js'
+# Paths
+TEMPLATE_JS_PATH = 'frontend/static/app.js.template'  # The template with placeholder
+TARGET_JS_PATH = 'frontend/static/app.js'            # The generated file that will be uploaded
 
-# The placeholder string in app.js to replace
 PLACEHOLDER = '__API_GATEWAY_URL__'
 
 def get_terraform_output(output_name):
@@ -15,20 +17,24 @@ def get_terraform_output(output_name):
     )
     return result.stdout.strip()
 
-def replace_placeholder_in_file(file_path, placeholder, replacement):
-    with open(file_path, 'r') as file:
-        content = file.read()
+def generate_app_js(template_path, target_path, api_url):
+    # Copy template first
+    shutil.copyfile(template_path, target_path)
 
-    content = content.replace(placeholder, replacement)
+    # Replace placeholder with actual API URL
+    with open(target_path, 'r') as f:
+        content = f.read()
 
-    with open(file_path, 'w') as file:
-        file.write(content)
+    content = content.replace(PLACEHOLDER, api_url)
+
+    with open(target_path, 'w') as f:
+        f.write(content)
 
 def main():
     api_url = get_terraform_output('api_gateway_url')
-    print(f"Replacing placeholder with API URL: {api_url}")
-    replace_placeholder_in_file(APP_JS_PATH, PLACEHOLDER, api_url)
-    print("Done updating app.js")
+    print(f"Generating app.js with API URL: {api_url}")
+    generate_app_js(TEMPLATE_JS_PATH, TARGET_JS_PATH, api_url)
+    print("app.js generated successfully.")
 
 if __name__ == '__main__':
     main()
