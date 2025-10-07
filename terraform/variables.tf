@@ -31,3 +31,7 @@ variable "api_stage_name" {
   type        = string
   default     = "dev"
 }
+variable "grok_api_key" {
+  description = "API key for Grok (xAI)"
+  type        = string
+}
